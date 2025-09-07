@@ -33,7 +33,7 @@ clean: ## Clean up temporary files
 	rm -rf build/ dist/ .coverage htmlcov/
 
 run-example: ## Run example with the sample sprint file
-	python main.py --file example_sprint.md --board-id Z0OpcpxE --dry-run
+	python main.py --file examples/example_sprint.md --board-id Z0OpcpxE --dry-run
 
 test-connection: ## Test connection to Trello API
 	python main.py --test-connection

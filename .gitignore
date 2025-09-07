@@ -3,6 +3,8 @@ secrets.env
 .env
 .env.local
 .env.production
+config/secrets.env
+config/.env
 
 # Python
 __pycache__/
@@ -43,6 +45,7 @@ Thumbs.db
 
 # Trello config with secrets
 trello_config.json
+config/trello_config.json
 
 # Package build artifacts
 build/

@@ -41,8 +41,20 @@ class ConfigManager:
     @staticmethod
     def _load_from_secrets_file() -> Optional[TrelloConfig]:
         """Load configuration from secrets.env file"""
-        secrets_file = 'secrets.env'
-        if not os.path.exists(secrets_file):
+        # Try multiple locations for secrets file
+        secrets_locations = [
+            'config/secrets.env',  # New organized location
+            'secrets.env',         # Legacy location
+            '.env'                 # Alternative naming
+        ]
+        
+        secrets_file = None
+        for location in secrets_locations:
+            if os.path.exists(location):
+                secrets_file = location
+                break
+        
+        if not secrets_file:
             return None
         
         try:
@@ -69,8 +81,19 @@ class ConfigManager:
     @staticmethod
     def _load_from_config_file() -> Optional[TrelloConfig]:
         """Load configuration from trello_config.json file"""
-        config_file = 'trello_config.json'
-        if not os.path.exists(config_file):
+        # Try multiple locations for config file
+        config_locations = [
+            'config/trello_config.json',  # New organized location
+            'trello_config.json'           # Legacy location
+        ]
+        
+        config_file = None
+        for location in config_locations:
+            if os.path.exists(location):
+                config_file = location
+                break
+        
+        if not config_file:
             return None
         
         try:
