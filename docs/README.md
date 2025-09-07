@@ -69,7 +69,25 @@ pip install -e ".[dev]"
 
 ## Usage
 
-### Basic Usage
+### 🖥️ GUI Mode (Recommended for most users)
+
+Launch the graphical interface:
+```bash
+python gui.py
+# or
+make gui
+```
+
+The GUI provides:
+- **🔧 Configuration Management** - Easy setup of API credentials
+- **📁 File Selection** - Browse and select sprint files
+- **👀 Sprint Preview** - See parsed sprint details before generation
+- **🎯 Card Generation** - Generate cards with progress tracking
+- **🔄 List Management** - Select target Trello lists
+
+### 💻 Command Line Mode
+
+#### Basic Usage
 ```bash
 python main.py --file sprints.md --board-id YOUR_BOARD_ID
 ```

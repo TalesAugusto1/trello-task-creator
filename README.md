@@ -4,6 +4,7 @@ A powerful tool to automatically generate Trello cards from markdown sprint file
 
 ## 🚀 Quick Start
 
+### 🖥️ GUI Mode (Recommended)
 ```bash
 # Clone the repository
 git clone https://github.com/TalesAugusto1/trello-task-creator.git
@@ -12,6 +13,14 @@ cd trello-task-creator
 # Install dependencies
 pip install -r requirements.txt
 
+# Launch the GUI
+python gui.py
+# or
+make gui
+```
+
+### 💻 Command Line Mode
+```bash
 # Test connection
 python main.py --test-connection
 
@@ -39,7 +48,8 @@ trello-task-creator/
 │   └── example_sprint.md  # Sample sprint file
 ├── docs/                  # Documentation
 │   └── README.md          # Detailed documentation
-├── main.py               # Entry point
+├── main.py               # CLI entry point
+├── gui.py                # GUI entry point
 ├── setup.py              # Package setup
 ├── Makefile              # Development commands
 └── requirements.txt      # Dependencies

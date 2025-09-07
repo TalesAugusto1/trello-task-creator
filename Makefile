@@ -45,3 +45,9 @@ install-package: ## Install the package in development mode
 	pip install -e .
 
 check: lint test ## Run all checks (lint + test)
+
+gui: ## Launch the GUI application
+	python gui.py
+
+gui-dev: ## Launch GUI in development mode
+	python -c "import sys; sys.path.insert(0, 'src'); from src.gui import main; main()"
