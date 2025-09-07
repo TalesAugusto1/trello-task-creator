@@ -305,7 +305,7 @@ class ModernTrelloGUI:
         api_key_label = ttk.Label(config_frame, text="🔑 API Key:", style='Subtitle.TLabel')
         api_key_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 8))
         self.api_key_entry = ttk.Entry(config_frame, textvariable=self.api_key_var, 
-                                     show="*", style='Modern.TEntry', width=45)
+                                     show="*", style='Modern.TEntry', width=40)
         self.api_key_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
         
         # Add tooltip for API Key
@@ -315,7 +315,7 @@ class ModernTrelloGUI:
         token_label = ttk.Label(config_frame, text="🎫 Token:", style='Subtitle.TLabel')
         token_label.grid(row=1, column=0, sticky=tk.W, pady=(0, 8))
         self.token_entry = ttk.Entry(config_frame, textvariable=self.token_var, 
-                                   show="*", style='Modern.TEntry', width=45)
+                                   show="*", style='Modern.TEntry', width=40)
         self.token_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
         
         # Add tooltip for Token
@@ -325,7 +325,7 @@ class ModernTrelloGUI:
         board_label = ttk.Label(config_frame, text="📋 Board ID:", style='Subtitle.TLabel')
         board_label.grid(row=2, column=0, sticky=tk.W, pady=(0, 8))
         self.board_id_entry = ttk.Entry(config_frame, textvariable=self.board_id_var, 
-                                      style='Modern.TEntry', width=45)
+                                      style='Modern.TEntry', width=40)
         self.board_id_entry.grid(row=2, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
         
         # Add tooltip for Board ID
@@ -420,7 +420,7 @@ class ModernTrelloGUI:
         file_select_frame.columnconfigure(0, weight=1)
         
         self.file_entry = ttk.Entry(file_select_frame, textvariable=self.file_path_var, 
-                                  state='readonly', style='Modern.TEntry', width=40)
+                                  state='readonly', style='Modern.TEntry', width=35)
         self.file_entry.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=(0, 12))
         
         browse_button = ttk.Button(file_select_frame, text="📂 Browse", 
@@ -481,9 +481,10 @@ class ModernTrelloGUI:
         clear_button.grid(row=0, column=1, sticky=tk.E)
         self.create_tooltip(clear_button, "Clear the preview")
         
-        # Enhanced preview text with better styling
-        self.preview_text = scrolledtext.ScrolledText(preview_frame, height=10, wrap=tk.WORD, 
-                                                    state='disabled', font=('Consolas', 10))
+        # Enhanced preview text with better styling and overflow protection
+        self.preview_text = scrolledtext.ScrolledText(preview_frame, height=8, wrap=tk.WORD, 
+                                                    state='disabled', font=('Consolas', 9),
+                                                    width=80)
         self.preview_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Add initial message
@@ -514,7 +515,7 @@ class ModernTrelloGUI:
         list_label.grid(row=0, column=0, sticky=tk.W, padx=(0, 15))
         
         self.list_combo = ttk.Combobox(list_frame, textvariable=self.list_name_var, 
-                                     style='Modern.TCombobox', width=35)
+                                     style='Modern.TCombobox', width=30)
         self.list_combo.grid(row=0, column=1, sticky=(tk.W, tk.E), padx=(0, 12))
         self.create_tooltip(self.list_combo, "Select the Trello list where cards will be created")
         
@@ -561,8 +562,14 @@ class ModernTrelloGUI:
                                      style='Info.TLabel')
         self.status_label.grid(row=0, column=1, sticky=tk.W)
         
+    def truncate_text(self, text, max_length=60):
+        """Truncate text to prevent overflow"""
+        if len(text) <= max_length:
+            return text
+        return text[:max_length-3] + "..."
+    
     def update_status(self, message, status_type="info"):
-        """Update status with icon and color"""
+        """Update status with icon and color, preventing overflow"""
         icons = {
             "info": "ℹ️",
             "success": "✅", 
@@ -571,8 +578,11 @@ class ModernTrelloGUI:
             "loading": "⏳"
         }
         
+        # Truncate message to prevent overflow
+        truncated_message = self.truncate_text(message, 80)
+        
         self.status_icon.configure(text=icons.get(status_type, "ℹ️"))
-        self.status_var.set(message)
+        self.status_var.set(truncated_message)
         
         # Update status label style based on type
         if status_type == "success":
@@ -592,10 +602,12 @@ class ModernTrelloGUI:
             initialdir="examples"
         )
         if file_path:
+            filename = os.path.basename(file_path)
+            truncated_filename = self.truncate_text(filename, 30)
             self.file_path_var.set(file_path)
-            self.file_status_var.set(f"✅ Selected: {os.path.basename(file_path)}")
+            self.file_status_var.set(f"✅ Selected: {truncated_filename}")
             self.file_status_label.configure(style='Success.TLabel')
-            self.update_status(f"File selected: {os.path.basename(file_path)}", "success")
+            self.update_status(f"File selected: {truncated_filename}", "success")
             
     def load_config(self):
         """Load configuration from file with enhanced feedback"""
@@ -703,17 +715,22 @@ class ModernTrelloGUI:
         threading.Thread(target=parse_thread, daemon=True).start()
         
     def update_preview(self):
-        """Update the preview text with enhanced formatting"""
+        """Update the preview text with enhanced formatting and overflow protection"""
         if not self.sprint_data:
             return
             
+        # Truncate long titles to prevent overflow
+        title = self.truncate_text(self.sprint_data.title, 50)
+        focus = self.truncate_text(self.sprint_data.focus, 40)
+        dependencies = self.truncate_text(self.sprint_data.dependencies, 40)
+        
         preview_text = f"""🎯 SPRINT OVERVIEW
 {'='*50}
-📋 Title: {self.sprint_data.title}
+📋 Title: {title}
 📅 Duration: {self.sprint_data.duration}
-🎯 Focus: {self.sprint_data.focus}
+🎯 Focus: {focus}
 ⚡ Priority: {self.sprint_data.priority}
-🔗 Dependencies: {self.sprint_data.dependencies}
+🔗 Dependencies: {dependencies}
 
 📊 MILESTONES ({len(self.sprint_data.milestones)})
 {'='*50}
@@ -721,13 +738,15 @@ class ModernTrelloGUI:
         
         total_tasks = 0
         for i, milestone in enumerate(self.sprint_data.milestones, 1):
-            preview_text += f"\n{i}. 🎯 {milestone.title}\n"
+            milestone_title = self.truncate_text(milestone.title, 45)
+            preview_text += f"\n{i}. 🎯 {milestone_title}\n"
             preview_text += f"   📅 Duration: {milestone.duration}\n"
             preview_text += f"   ⚡ Priority: {milestone.priority}\n"
             preview_text += f"   📋 Tasks: {len(milestone.tasks)}\n"
             
             for j, task in enumerate(milestone.tasks, 1):
-                preview_text += f"      {j}. 📋 {task.title} ({task.estimated_time})\n"
+                task_title = self.truncate_text(task.title, 40)
+                preview_text += f"      {j}. 📋 {task_title} ({task.estimated_time})\n"
                 
             total_tasks += len(milestone.tasks)
             preview_text += "\n"
