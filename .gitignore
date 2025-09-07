@@ -43,3 +43,24 @@ Thumbs.db
 
 # Trello config with secrets
 trello_config.json
+
+# Package build artifacts
+build/
+dist/
+*.egg-info/
+.eggs/
+
+# Testing
+.coverage
+htmlcov/
+.pytest_cache/
+
+# Development
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# IDE specific
+.vscode/settings.json
+.vscode/launch.json
+.vscode/extensions.json

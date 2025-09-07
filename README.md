@@ -53,27 +53,77 @@ Create a `trello_config.json` file:
 pip install -r requirements.txt
 ```
 
+## Installation
+
+### From Source
+```bash
+git clone https://github.com/TalesAugusto1/trello-task-creator.git
+cd trello-task-creator
+pip install -r requirements.txt
+```
+
+### Development Installation
+```bash
+pip install -e ".[dev]"
+```
+
 ## Usage
 
 ### Basic Usage
 ```bash
-python trello_sprint_generator.py --file sprints.md --board-id YOUR_BOARD_ID
+python main.py --file sprints.md --board-id YOUR_BOARD_ID
 ```
 
 ### Advanced Options
 ```bash
-python trello_sprint_generator.py \
+python main.py \
   --file sprints.md \
   --board-id YOUR_BOARD_ID \
   --list-name "Backlog" \
   --dry-run
 ```
 
+### Test Connection
+```bash
+python main.py --test-connection
+```
+
 ### Options
-- `--file, -f`: Path to the sprint markdown file (required)
-- `--board-id, -b`: Trello board ID (required)
+- `--file, -f`: Path to the sprint markdown file (required for card generation)
+- `--board-id, -b`: Trello board ID (required for card generation)
 - `--list-name, -l`: Target list name (default: "Backlog")
 - `--dry-run`: Preview results without creating cards
+- `--test-connection`: Test connection to Trello API
+- `--verbose, -v`: Enable verbose output
+
+## Development
+
+### Running Tests
+```bash
+make test
+# or
+pytest tests/
+```
+
+### Code Formatting
+```bash
+make format
+# or
+black src/ tests/
+```
+
+### Linting
+```bash
+make lint
+# or
+flake8 src/ tests/
+mypy src/
+```
+
+### All Checks
+```bash
+make check
+```
 
 ## Markdown Format
 
