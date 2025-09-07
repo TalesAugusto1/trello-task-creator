@@ -31,16 +31,16 @@ class ModernTrelloGUI:
         self.animation_running = False
         
     def setup_window(self):
-        """Setup the main window with enhanced features"""
-        self.root.title("🎯 Trello Sprint Generator - Enhanced")
-        self.root.geometry("1000x750")
-        self.root.minsize(900, 650)
+        """Setup the main window with optimized dimensions"""
+        self.root.title("🎯 Trello Sprint Generator")
+        self.root.geometry("900x600")
+        self.root.minsize(800, 550)
         
         # Center the window
         self.root.update_idletasks()
-        x = (self.root.winfo_screenwidth() // 2) - (1000 // 2)
-        y = (self.root.winfo_screenheight() // 2) - (750 // 2)
-        self.root.geometry(f"1000x750+{x}+{y}")
+        x = (self.root.winfo_screenwidth() // 2) - (900 // 2)
+        y = (self.root.winfo_screenheight() // 2) - (600 // 2)
+        self.root.geometry(f"900x600+{x}+{y}")
         
         # Set window icon (if available)
         try:
@@ -234,9 +234,9 @@ class ModernTrelloGUI:
         animate_step(0)
         
     def create_widgets(self):
-        """Create all enhanced GUI widgets"""
-        # Main container with enhanced styling
-        main_frame = ttk.Frame(self.root, padding="25")
+        """Create optimized GUI widgets with compact layout"""
+        # Main container with compact styling
+        main_frame = ttk.Frame(self.root, padding="15")
         main_frame.grid(row=0, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Configure grid weights
@@ -263,12 +263,12 @@ class ModernTrelloGUI:
         self.create_status_section(main_frame, row=5)
         
     def create_header(self, parent, row):
-        """Create enhanced header with theme toggle"""
+        """Create compact header with theme toggle"""
         header_frame = ttk.Frame(parent)
-        header_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 25))
+        header_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 15))
         header_frame.columnconfigure(0, weight=1)
         
-        # Title with enhanced styling
+        # Title with compact styling
         title_label = ttk.Label(header_frame, text="🎯 Trello Sprint Generator", style='Title.TLabel')
         title_label.grid(row=0, column=0, sticky=tk.W)
         
@@ -295,74 +295,74 @@ class ModernTrelloGUI:
         self.root.after(100, self.refresh_widgets)
         
     def create_config_section(self, parent, row):
-        """Create enhanced configuration section"""
-        # Config frame with enhanced styling
-        config_frame = ttk.LabelFrame(parent, text="🔧 Configuration", padding="20", style='Card.TFrame')
-        config_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 20))
+        """Create compact configuration section"""
+        # Config frame with compact styling
+        config_frame = ttk.LabelFrame(parent, text="🔧 Configuration", padding="12", style='Card.TFrame')
+        config_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 12))
         config_frame.columnconfigure(1, weight=1)
         
-        # API Key with enhanced styling
+        # API Key with compact styling
         api_key_label = ttk.Label(config_frame, text="🔑 API Key:", style='Subtitle.TLabel')
-        api_key_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 8))
+        api_key_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
         self.api_key_entry = ttk.Entry(config_frame, textvariable=self.api_key_var, 
-                                     show="*", style='Modern.TEntry', width=40)
-        self.api_key_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
+                                     show="*", style='Modern.TEntry', width=35)
+        self.api_key_entry.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 5), padx=(10, 0))
         
         # Add tooltip for API Key
         self.create_tooltip(self.api_key_entry, "Your Trello API key from https://trello.com/app-key")
         
-        # Token with enhanced styling
+        # Token with compact styling
         token_label = ttk.Label(config_frame, text="🎫 Token:", style='Subtitle.TLabel')
-        token_label.grid(row=1, column=0, sticky=tk.W, pady=(0, 8))
+        token_label.grid(row=1, column=0, sticky=tk.W, pady=(0, 5))
         self.token_entry = ttk.Entry(config_frame, textvariable=self.token_var, 
-                                   show="*", style='Modern.TEntry', width=40)
-        self.token_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
+                                   show="*", style='Modern.TEntry', width=35)
+        self.token_entry.grid(row=1, column=1, sticky=(tk.W, tk.E), pady=(0, 5), padx=(10, 0))
         
         # Add tooltip for Token
         self.create_tooltip(self.token_entry, "Your Trello token with read/write permissions")
         
-        # Board ID with enhanced styling
+        # Board ID with compact styling
         board_label = ttk.Label(config_frame, text="📋 Board ID:", style='Subtitle.TLabel')
-        board_label.grid(row=2, column=0, sticky=tk.W, pady=(0, 8))
+        board_label.grid(row=2, column=0, sticky=tk.W, pady=(0, 5))
         self.board_id_entry = ttk.Entry(config_frame, textvariable=self.board_id_var, 
-                                      style='Modern.TEntry', width=40)
-        self.board_id_entry.grid(row=2, column=1, sticky=(tk.W, tk.E), pady=(0, 8), padx=(15, 0))
+                                      style='Modern.TEntry', width=35)
+        self.board_id_entry.grid(row=2, column=1, sticky=(tk.W, tk.E), pady=(0, 5), padx=(10, 0))
         
         # Add tooltip for Board ID
         self.create_tooltip(self.board_id_entry, "The ID of your Trello board (found in the URL)")
         
-        # Enhanced button layout
+        # Compact button layout
         button_frame = ttk.Frame(config_frame)
-        button_frame.grid(row=3, column=0, columnspan=2, pady=(15, 0))
+        button_frame.grid(row=3, column=0, columnspan=2, pady=(8, 0))
         
-        # Test connection button with enhanced styling
-        self.test_button = ttk.Button(button_frame, text="🔍 Test Connection", 
+        # Test connection button with compact styling
+        self.test_button = ttk.Button(button_frame, text="🔍 Test", 
                                     command=self.test_connection, style='Success.TButton')
-        self.test_button.pack(side=tk.LEFT, padx=(0, 12))
+        self.test_button.pack(side=tk.LEFT, padx=(0, 8))
         self.create_tooltip(self.test_button, "Test your API credentials")
         
         # Load config button
-        self.load_button = ttk.Button(button_frame, text="📂 Load Config", 
+        self.load_button = ttk.Button(button_frame, text="📂 Load", 
                                     command=self.load_config, style='Secondary.TButton')
-        self.load_button.pack(side=tk.LEFT, padx=(0, 12))
+        self.load_button.pack(side=tk.LEFT, padx=(0, 8))
         self.create_tooltip(self.load_button, "Load saved configuration")
         
         # Save config button
-        self.save_button = ttk.Button(button_frame, text="💾 Save Config", 
+        self.save_button = ttk.Button(button_frame, text="💾 Save", 
                                     command=self.save_config, style='Secondary.TButton')
         self.save_button.pack(side=tk.LEFT)
         self.create_tooltip(self.save_button, "Save current configuration")
         
-        # Enhanced status with icon
+        # Compact status with icon
         status_frame = ttk.Frame(config_frame)
-        status_frame.grid(row=4, column=0, columnspan=2, pady=(15, 0))
+        status_frame.grid(row=4, column=0, columnspan=2, pady=(8, 0))
         
         self.config_status_label = ttk.Label(status_frame, textvariable=self.config_status_var, 
                                            style='Info.TLabel')
         self.config_status_label.pack(side=tk.LEFT)
         
         # Add help button
-        help_button = ttk.Button(status_frame, text="❓ Help", 
+        help_button = ttk.Button(status_frame, text="❓", 
                                command=self.show_config_help, style='Secondary.TButton')
         help_button.pack(side=tk.RIGHT)
         self.create_tooltip(help_button, "Get help with configuration")
@@ -405,38 +405,38 @@ class ModernTrelloGUI:
             )
         
     def create_file_section(self, parent, row):
-        """Create enhanced file selection section"""
-        # File frame with enhanced styling
-        file_frame = ttk.LabelFrame(parent, text="📁 Sprint File", padding="20", style='Card.TFrame')
-        file_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 20))
+        """Create compact file selection section"""
+        # File frame with compact styling
+        file_frame = ttk.LabelFrame(parent, text="📁 Sprint File", padding="12", style='Card.TFrame')
+        file_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 12))
         file_frame.columnconfigure(1, weight=1)
         
-        # File selection with enhanced styling
+        # File selection with compact styling
         file_label = ttk.Label(file_frame, text="📄 Sprint File:", style='Subtitle.TLabel')
-        file_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 10))
+        file_label.grid(row=0, column=0, sticky=tk.W, pady=(0, 5))
         
         file_select_frame = ttk.Frame(file_frame)
-        file_select_frame.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 10), padx=(15, 0))
+        file_select_frame.grid(row=0, column=1, sticky=(tk.W, tk.E), pady=(0, 5), padx=(10, 0))
         file_select_frame.columnconfigure(0, weight=1)
         
         self.file_entry = ttk.Entry(file_select_frame, textvariable=self.file_path_var, 
-                                  state='readonly', style='Modern.TEntry', width=35)
-        self.file_entry.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=(0, 12))
+                                  state='readonly', style='Modern.TEntry', width=30)
+        self.file_entry.grid(row=0, column=0, sticky=(tk.W, tk.E), padx=(0, 8))
         
         browse_button = ttk.Button(file_select_frame, text="📂 Browse", 
                                  command=self.browse_file, style='Secondary.TButton')
         browse_button.grid(row=0, column=1)
         self.create_tooltip(browse_button, "Select a markdown sprint file")
         
-        # Enhanced parse button
+        # Compact parse button
         parse_button = ttk.Button(file_frame, text="📋 Parse Sprint", 
                                 command=self.parse_sprint, style='Primary.TButton')
-        parse_button.grid(row=1, column=0, columnspan=2, pady=(15, 0))
+        parse_button.grid(row=1, column=0, columnspan=2, pady=(8, 0))
         self.create_tooltip(parse_button, "Parse the selected sprint file")
         
-        # Enhanced file status
+        # Compact file status
         status_frame = ttk.Frame(file_frame)
-        status_frame.grid(row=2, column=0, columnspan=2, pady=(10, 0))
+        status_frame.grid(row=2, column=0, columnspan=2, pady=(5, 0))
         
         self.file_status_label = ttk.Label(status_frame, textvariable=self.file_status_var, 
                                          style='Info.TLabel')
@@ -460,16 +460,16 @@ class ModernTrelloGUI:
                                  "Example file not found. Please select a sprint file manually.")
         
     def create_preview_section(self, parent, row):
-        """Create enhanced preview section"""
-        # Preview frame with enhanced styling
-        preview_frame = ttk.LabelFrame(parent, text="👀 Sprint Preview", padding="20", style='Card.TFrame')
-        preview_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 20))
+        """Create compact preview section"""
+        # Preview frame with compact styling
+        preview_frame = ttk.LabelFrame(parent, text="👀 Sprint Preview", padding="12", style='Card.TFrame')
+        preview_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E, tk.N, tk.S), pady=(0, 12))
         preview_frame.columnconfigure(0, weight=1)
         preview_frame.rowconfigure(1, weight=1)
         
-        # Preview header with stats
+        # Compact preview header
         header_frame = ttk.Frame(preview_frame)
-        header_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 10))
+        header_frame.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
         header_frame.columnconfigure(1, weight=1)
         
         preview_label = ttk.Label(header_frame, text="📊 Sprint Overview:", style='Subtitle.TLabel')
@@ -481,10 +481,10 @@ class ModernTrelloGUI:
         clear_button.grid(row=0, column=1, sticky=tk.E)
         self.create_tooltip(clear_button, "Clear the preview")
         
-        # Enhanced preview text with better styling and overflow protection
-        self.preview_text = scrolledtext.ScrolledText(preview_frame, height=8, wrap=tk.WORD, 
-                                                    state='disabled', font=('Consolas', 9),
-                                                    width=80)
+        # Compact preview text with overflow protection
+        self.preview_text = scrolledtext.ScrolledText(preview_frame, height=6, wrap=tk.WORD, 
+                                                    state='disabled', font=('Consolas', 8),
+                                                    width=70)
         self.preview_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Add initial message
@@ -500,55 +500,55 @@ class ModernTrelloGUI:
         self.preview_text.config(state='disabled')
         
     def create_action_section(self, parent, row):
-        """Create enhanced action section"""
-        # Action frame with enhanced styling
-        action_frame = ttk.LabelFrame(parent, text="🚀 Actions", padding="20", style='Card.TFrame')
-        action_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 20))
+        """Create compact action section"""
+        # Action frame with compact styling
+        action_frame = ttk.LabelFrame(parent, text="🚀 Actions", padding="12", style='Card.TFrame')
+        action_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 12))
         action_frame.columnconfigure(1, weight=1)
         
-        # Enhanced list selection
+        # Compact list selection
         list_frame = ttk.Frame(action_frame)
-        list_frame.grid(row=0, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 15))
+        list_frame.grid(row=0, column=0, columnspan=2, sticky=(tk.W, tk.E), pady=(0, 8))
         list_frame.columnconfigure(1, weight=1)
         
         list_label = ttk.Label(list_frame, text="📋 Target List:", style='Subtitle.TLabel')
-        list_label.grid(row=0, column=0, sticky=tk.W, padx=(0, 15))
+        list_label.grid(row=0, column=0, sticky=tk.W, padx=(0, 10))
         
         self.list_combo = ttk.Combobox(list_frame, textvariable=self.list_name_var, 
-                                     style='Modern.TCombobox', width=30)
-        self.list_combo.grid(row=0, column=1, sticky=(tk.W, tk.E), padx=(0, 12))
+                                     style='Modern.TCombobox', width=25)
+        self.list_combo.grid(row=0, column=1, sticky=(tk.W, tk.E), padx=(0, 8))
         self.create_tooltip(self.list_combo, "Select the Trello list where cards will be created")
         
-        refresh_button = ttk.Button(list_frame, text="🔄 Refresh Lists", 
+        refresh_button = ttk.Button(list_frame, text="🔄 Refresh", 
                                    command=self.refresh_lists, style='Secondary.TButton')
         refresh_button.grid(row=0, column=2)
         self.create_tooltip(refresh_button, "Refresh available lists from Trello")
         
-        # Enhanced action buttons
+        # Compact action buttons
         button_frame = ttk.Frame(action_frame)
-        button_frame.grid(row=1, column=0, columnspan=2, pady=(15, 0))
+        button_frame.grid(row=1, column=0, columnspan=2, pady=(8, 0))
         
-        preview_button = ttk.Button(button_frame, text="🔍 Preview Cards", 
+        preview_button = ttk.Button(button_frame, text="🔍 Preview", 
                                    command=self.preview_cards, style='Secondary.TButton')
-        preview_button.pack(side=tk.LEFT, padx=(0, 15))
+        preview_button.pack(side=tk.LEFT, padx=(0, 10))
         self.create_tooltip(preview_button, "Preview cards that will be created")
         
-        generate_button = ttk.Button(button_frame, text="🎯 Generate Cards", 
+        generate_button = ttk.Button(button_frame, text="🎯 Generate", 
                                    command=self.generate_cards, style='Primary.TButton')
         generate_button.pack(side=tk.LEFT)
         self.create_tooltip(generate_button, "Generate all cards in Trello")
         
     def create_status_section(self, parent, row):
-        """Create enhanced status section"""
-        # Status frame with enhanced styling
+        """Create compact status section"""
+        # Status frame with compact styling
         status_frame = ttk.Frame(parent)
-        status_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 15))
+        status_frame.grid(row=row, column=0, columnspan=3, sticky=(tk.W, tk.E), pady=(0, 10))
         status_frame.columnconfigure(0, weight=1)
         
-        # Enhanced progress bar
+        # Compact progress bar
         self.progress_bar = ttk.Progressbar(status_frame, variable=self.progress_var, 
-                                          mode='determinate', length=400)
-        self.progress_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 8))
+                                          mode='determinate', length=300)
+        self.progress_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 5))
         
         # Status text with icon
         status_text_frame = ttk.Frame(status_frame)
@@ -556,7 +556,7 @@ class ModernTrelloGUI:
         status_text_frame.columnconfigure(1, weight=1)
         
         self.status_icon = ttk.Label(status_text_frame, text="ℹ️", style='Info.TLabel')
-        self.status_icon.grid(row=0, column=0, sticky=tk.W, padx=(0, 8))
+        self.status_icon.grid(row=0, column=0, sticky=tk.W, padx=(0, 5))
         
         self.status_label = ttk.Label(status_text_frame, textvariable=self.status_var, 
                                      style='Info.TLabel')
