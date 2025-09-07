@@ -6,6 +6,7 @@ import re
 from typing import Dict, List
 from .models import Sprint, Milestone, Task
 from .trello_client import TrelloClient
+from .utils import clean_title
 
 
 class SprintGeneratorError(Exception):
@@ -84,23 +85,6 @@ class SprintGenerator:
         
         return target_list
     
-    def _clean_title(self, title: str) -> str:
-        """Clean title by removing markdown formatting and metadata"""
-        # Remove markdown bold formatting
-        title = re.sub(r'\*\*(.+?)\*\*', r'\1', title)
-        
-        # Remove markdown headers
-        title = re.sub(r'^#+\s*', '', title)
-        
-        # Remove any trailing metadata patterns
-        title = re.sub(r'\s*\*\*Duração\*\*:.*$', '', title)
-        title = re.sub(r'\s*\*\*Prioridade\*\*:.*$', '', title)
-        title = re.sub(r'\s*\*\*Dependências\*\*:.*$', '', title)
-        
-        # Clean up extra whitespace
-        title = title.strip()
-        
-        return title
 
     def _create_labels(self, board_id: str, sprint: Sprint):
         """Create necessary labels for the sprint"""
@@ -167,7 +151,7 @@ class SprintGenerator:
 **Dependencies:** {milestone.dependencies}
 
 **📋 Tasks ({len(milestone.tasks)}):**
-{chr(10).join([f"• {self._clean_title(task.title)} ({task.estimated_time})" for task in milestone.tasks])}
+{chr(10).join([f"• {clean_title(task.title)} ({task.estimated_time})" for task in milestone.tasks])}
         """.strip()
         
         # Determine milestone priority label
@@ -179,7 +163,7 @@ class SprintGenerator:
         
         return self.trello_client.create_card(
             list_id=list_id,
-            name=f"🎯 {self._clean_title(milestone.title)}",
+            name=f"🎯 {clean_title(milestone.title)}",
             desc=description,
             labels=[self.label_cache.get(priority_label, '')]
         )
@@ -206,7 +190,7 @@ class SprintGenerator:
         # Create the card
         card = self.trello_client.create_card(
             list_id=list_id,
-            name=f"📋 {self._clean_title(task.title)}",
+            name=f"📋 {clean_title(task.title)}",
             desc=description,
             labels=[self.label_cache.get(label, '') for label in task.labels if label in self.label_cache]
         )
