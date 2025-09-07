@@ -395,9 +395,14 @@ class ModernTrelloGUI:
         
     def refresh_widgets(self):
         """Refresh widgets after theme change"""
-        # This is a placeholder for theme refresh
-        # In a real implementation, you'd recreate widgets
-        pass
+        # Update preview text colors if it exists
+        if hasattr(self, 'preview_text'):
+            colors = self.colors[self.theme]
+            self.preview_text.configure(
+                bg=colors['card_bg'],
+                fg=colors['fg'],
+                selectbackground=colors['accent']
+            )
         
     def create_file_section(self, parent, row):
         """Create enhanced file selection section"""
@@ -478,10 +483,7 @@ class ModernTrelloGUI:
         
         # Enhanced preview text with better styling
         self.preview_text = scrolledtext.ScrolledText(preview_frame, height=10, wrap=tk.WORD, 
-                                                    state='disabled', font=('Consolas', 10),
-                                                    bg=self.colors[self.theme]['card_bg'],
-                                                    fg=self.colors[self.theme]['fg'],
-                                                    selectbackground=self.colors[self.theme]['accent'])
+                                                    state='disabled', font=('Consolas', 10))
         self.preview_text.grid(row=1, column=0, sticky=(tk.W, tk.E, tk.N, tk.S))
         
         # Add initial message
@@ -544,7 +546,7 @@ class ModernTrelloGUI:
         
         # Enhanced progress bar
         self.progress_bar = ttk.Progressbar(status_frame, variable=self.progress_var, 
-                                          mode='determinate', length=400, style='Modern.Horizontal.TProgressbar')
+                                          mode='determinate', length=400)
         self.progress_bar.grid(row=0, column=0, sticky=(tk.W, tk.E), pady=(0, 8))
         
         # Status text with icon
