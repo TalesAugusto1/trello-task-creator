@@ -250,35 +250,146 @@ class MarkdownParser:
             return 'Medium'
     
     def _extract_task_labels(self, task_content: str) -> List[str]:
-        """Extract labels for the task"""
-        labels = []
+        """Extract optimized labels for the task with intelligent prioritization"""
         content_lower = task_content.lower()
         
-        # Add priority-based labels
+        # Get all possible labels
+        all_labels = []
+        
+        # Priority (always include)
+        priority_label = self._get_priority_label(content_lower)
+        all_labels.append(priority_label)
+        
+        # Task type (always include the most relevant one)
+        task_type_label = self._get_primary_task_type(task_content, content_lower)
+        if task_type_label:
+            all_labels.append(task_type_label)
+        
+        # Technology (limit to 2-3 most important)
+        tech_labels = self._get_priority_technologies(task_content, content_lower)
+        all_labels.extend(tech_labels)
+        
+        # Complexity (only if not simple)
+        complexity_label = self._get_complexity_label(task_content, content_lower)
+        if complexity_label and 'Simple' not in complexity_label:
+            all_labels.append(complexity_label)
+        
+        # Phase (only for foundation/development phases)
+        phase_label = self._get_phase_label(task_content, content_lower)
+        if phase_label and phase_label in ['Phase: Foundation', 'Phase: Development']:
+            all_labels.append(phase_label)
+        
+        # Limit total labels to maximum 6 for better UI
+        return all_labels[:6]
+    
+    def _get_priority_label(self, content_lower: str) -> str:
+        """Get priority label"""
         if 'crítica' in content_lower or 'critical' in content_lower:
-            labels.append('Priority: Critical')
+            return 'Priority: Critical'
         elif 'alta' in content_lower or 'high' in content_lower:
-            labels.append('Priority: High')
+            return 'Priority: High'
         elif 'baixa' in content_lower or 'low' in content_lower:
-            labels.append('Priority: Low')
+            return 'Priority: Low'
+        else:
+            return 'Priority: Medium'
+    
+    def _get_primary_task_type(self, task_content: str, content_lower: str) -> str:
+        """Get the most relevant task type (only one)"""
+        # Priority order for task types
+        if any(keyword in content_lower for keyword in ['configurar', 'configuração', 'setup', 'instalar', 'instalação', 'inicializar', 'inicialização']):
+            return 'Type: Setup'
+        elif any(keyword in content_lower for keyword in ['implementar', 'implementação', 'criar', 'desenvolver', 'desenvolvimento', 'código', 'programar']):
+            return 'Type: Development'
+        elif any(keyword in content_lower for keyword in ['testar', 'teste', 'testing', 'validar', 'verificar', 'debug']):
+            return 'Type: Testing'
+        elif any(keyword in content_lower for keyword in ['documentar', 'documentação', 'document', 'readme', 'guia', 'manual']):
+            return 'Type: Documentation'
+        elif any(keyword in content_lower for keyword in ['integrar', 'integração', 'conectar', 'conexão', 'api', 'serviço']):
+            return 'Type: Integration'
+        elif any(keyword in content_lower for keyword in ['interface', 'tela', 'componente', 'design', 'layout', 'visual', 'ui', 'ux']):
+            return 'Type: UI/UX'
+        elif any(keyword in content_lower for keyword in ['arquitetura', 'estrutura', 'padrão', 'pattern', 'organização']):
+            return 'Type: Architecture'
+        else:
+            return 'Type: Development'  # Default
+    
+    def _get_priority_technologies(self, task_content: str, content_lower: str) -> List[str]:
+        """Get 2-3 most important technology labels"""
+        tech_labels = []
         
-        # Add technology-based labels
+        # Priority 1: Main framework/platform
         if 'expo' in content_lower:
-            labels.append('Technology: Expo')
-        if 'firebase' in content_lower:
-            labels.append('Technology: Firebase')
-        if 'typescript' in content_lower:
-            labels.append('Technology: TypeScript')
-        if 'react' in content_lower:
-            labels.append('Technology: React')
-        if 'ui' in content_lower or 'ux' in content_lower:
-            labels.append('Category: UI/UX')
-        if 'backend' in content_lower:
-            labels.append('Category: Backend')
-        if 'frontend' in content_lower:
-            labels.append('Category: Frontend')
+            tech_labels.append('App: Expo')
+        elif 'react native' in content_lower:
+            tech_labels.append('App: React Native')
+        elif 'react' in content_lower and 'native' not in content_lower:
+            tech_labels.append('Frontend: React')
+        elif 'firebase' in content_lower:
+            tech_labels.append('Backend: Firebase')
+        elif 'node' in content_lower or 'nodejs' in content_lower:
+            tech_labels.append('Backend: Node.js')
         
-        return labels
+        # Priority 2: Key language
+        if 'typescript' in content_lower or 'ts' in content_lower:
+            tech_labels.append('Frontend: TypeScript')
+        elif 'javascript' in content_lower or 'js' in content_lower:
+            tech_labels.append('Frontend: JavaScript')
+        elif 'python' in content_lower:
+            tech_labels.append('Backend: Python')
+        
+        # Priority 3: Platform (only if mobile)
+        if any(keyword in content_lower for keyword in ['ios', 'iphone', 'android', 'mobile', 'móvel']):
+            if 'ios' in content_lower or 'iphone' in content_lower:
+                tech_labels.append('App: iOS')
+            elif 'android' in content_lower:
+                tech_labels.append('App: Android')
+            elif 'mobile' in content_lower or 'móvel' in content_lower:
+                tech_labels.append('App: Mobile')
+        
+        # Limit to 3 technology labels
+        return tech_labels[:3]
+    
+    def _get_complexity_label(self, task_content: str, content_lower: str) -> str:
+        """Get complexity label only if not simple"""
+        # Extract estimated time and determine complexity
+        time_match = re.search(r'tempo estimado[:\s]*(\d+)\s*(hora|hour|dia|day|semana|week)', content_lower)
+        if time_match:
+            time_value = int(time_match.group(1))
+            time_unit = time_match.group(2)
+            
+            # Convert to hours for comparison
+            if 'dia' in time_unit or 'day' in time_unit:
+                time_value *= 8  # Assume 8 hours per day
+            elif 'semana' in time_unit or 'week' in time_unit:
+                time_value *= 40  # Assume 40 hours per week
+            
+            if time_value <= 2:
+                return 'Complexity: Simple'
+            elif time_value <= 8:
+                return 'Complexity: Medium'
+            elif time_value <= 16:
+                return 'Complexity: Complex'
+            else:
+                return 'Complexity: Very Complex'
+        
+        # Additional complexity indicators
+        if any(keyword in content_lower for keyword in ['complexo', 'difícil', 'desafiador', 'complex', 'challenging']):
+            return 'Complexity: Complex'
+        
+        return None
+    
+    def _get_phase_label(self, task_content: str, content_lower: str) -> str:
+        """Get phase label only for foundation/development"""
+        if any(keyword in content_lower for keyword in ['inicialização', 'setup', 'configuração', 'primeira', 'foundation']):
+            return 'Phase: Foundation'
+        elif any(keyword in content_lower for keyword in ['desenvolvimento', 'implementação', 'core', 'principal']):
+            return 'Phase: Development'
+        else:
+            return None
+    
+    
+    
+    
     
     def _extract_success_metrics(self) -> List[str]:
         """Extract success metrics"""

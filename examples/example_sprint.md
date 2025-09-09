@@ -5,6 +5,113 @@ Baseado no documento de marcos de 2 meses, aqui estão as tarefas detalhadas par
 
 ---
 
+## 📋 **TAG REFERENCE CARD - Administrative Model**
+
+**Tempo Estimado**: 0 horas | **Responsável**: Project Manager
+
+**Descrição**: This card serves as a reference model for all available tags in the project. Use this as a guide for maintaining consistency across all tasks and sprints.
+
+**Critérios de Aceitação**:
+- [ ] All tag categories are documented
+- [ ] Color coding is clearly defined
+- [ ] Usage guidelines are provided
+- [ ] Team members understand the tag system
+
+**Requisitos Técnicos**:
+This is a reference card - no technical requirements needed.
+
+**Entregáveis**:
+- Complete tag reference documentation
+- Color coding guide
+- Usage examples
+
+---
+
+## 🏷️ **AVAILABLE TAGS REFERENCE**
+
+### **Priority Tags**
+- `Priority: Critical` (Red) - Urgent, must be completed immediately
+- `Priority: High` (Orange) - Important, should be completed soon
+- `Priority: Medium` (Yellow) - Normal priority, standard timeline
+- `Priority: Low` (Green) - Can be completed when time allows
+
+### **Task Type Tags**
+- `Type: Setup` (Yellow) - Configuration, installation, initialization tasks
+- `Type: Development` (Blue) - Coding, implementation, feature development
+- `Type: Testing` (Green) - Testing, validation, quality assurance
+- `Type: Documentation` (Sky) - Documentation, guides, manuals
+- `Type: Integration` (Purple) - API integration, service connections
+- `Type: UI/UX` (Pink) - User interface, user experience, design
+- `Type: Architecture` (Black) - System design, patterns, structure
+
+### **Frontend Technology Tags**
+- `Frontend: React` (Blue) - React.js web framework
+- `Frontend: Vue.js` (Green) - Vue.js framework
+- `Frontend: Angular` (Red) - Angular framework
+- `Frontend: TypeScript` (Sky) - TypeScript language
+- `Frontend: JavaScript` (Yellow) - JavaScript language
+- `Frontend: CSS` (Pink) - Cascading Style Sheets
+- `Frontend: HTML` (Orange) - HyperText Markup Language
+
+### **App Technology Tags**
+- `App: Expo` (Blue) - Expo development platform
+- `App: React Native` (Sky) - React Native framework
+- `App: Flutter` (Blue) - Flutter framework
+- `App: iOS` (Black) - iOS platform
+- `App: Android` (Green) - Android platform
+- `App: Mobile` (Blue) - General mobile development
+
+### **Backend Technology Tags**
+- `Backend: Firebase` (Purple) - Firebase platform
+- `Backend: Node.js` (Green) - Node.js runtime
+- `Backend: Python` (Green) - Python language
+- `Backend: Java` (Red) - Java language
+- `Backend: Database` (Black) - Database technologies
+- `Backend: AWS` (Orange) - Amazon Web Services
+- `Backend: REST API` (Sky) - RESTful API
+
+### **DevOps Technology Tags**
+- `DevOps: Git` (Black) - Version control
+- `DevOps: GitHub` (Black) - GitHub platform
+- `DevOps: npm` (Red) - Node package manager
+- `DevOps: ESLint` (Yellow) - Code linting
+- `DevOps: Docker` (Blue) - Containerization
+- `DevOps: CI/CD` (Green) - Continuous Integration/Deployment
+
+### **Testing Technology Tags**
+- `Testing: Jest` (Green) - JavaScript testing framework
+- `Testing: Cypress` (Green) - End-to-end testing
+- `Testing: Playwright` (Green) - Browser automation
+- `Testing: Selenium` (Green) - Web automation
+
+### **Complexity Tags**
+- `Complexity: Simple` (Green) - Easy tasks, 1-2 hours
+- `Complexity: Medium` (Yellow) - Moderate tasks, 3-8 hours
+- `Complexity: Complex` (Orange) - Difficult tasks, 9-16 hours
+- `Complexity: Very Complex` (Red) - Very difficult tasks, 16+ hours
+
+### **Phase Tags**
+- `Phase: Foundation` (Blue) - Project setup, initial configuration
+- `Phase: Development` (Green) - Core development work
+- `Phase: Testing` (Yellow) - Testing and validation phase
+- `Phase: Deployment` (Purple) - Release and deployment phase
+- `Phase: Maintenance` (Black) - Ongoing maintenance and support
+
+---
+
+## 📝 **TAG USAGE GUIDELINES**
+
+1. **Maximum 6 tags per task** - Keep it clean and focused
+2. **Always include Priority** - Every task needs a priority level
+3. **One Task Type only** - Choose the most relevant type
+4. **2-3 Technology tags max** - Main framework, key language, platform
+5. **Complexity only if not simple** - Hide "Simple" complexity to reduce clutter
+6. **Phase only for Foundation/Development** - Most relevant phases only
+
+---
+
+---
+
 ## 📋 **Visão Geral do Sprint 1**
 - **Duração**: 5 dias (Semana 1)
 - **Foco**: Configuração do Ambiente de Desenvolvimento + Implementação da Arquitetura de Telas

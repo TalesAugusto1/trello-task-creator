@@ -140,6 +140,7 @@ Examples:
             result = generator.generate_cards(sprint, args.board_id, args.list_name)
             
             print(f"\n✅ Successfully created:")
+            print(f"  🏷️  Tag reference card: {result['tag_reference_card']['name']}")
             print(f"  📋 Sprint card: {result['sprint_card']['name']}")
             print(f"  🎯 Milestone cards: {len(result['milestone_cards'])}")
             print(f"  📝 Task cards: {len(result['task_cards'])}")
